@@ -66,9 +66,9 @@ export default function ComingSoon() {
   };
 
   return (
-    <main className="min-h-screen md:h-screen w-full max-w-full overflow-x-hidden bg-black text-white font-sans flex flex-col justify-between p-6 md:p-10 lg:p-12 selection:bg-white selection:text-black antialiased">
-      {/* HEADER */}
-      <header className="w-full flex justify-between items-center z-30 shrink-0">
+    <main className="min-h-screen md:h-screen w-full max-w-full overflow-x-hidden bg-black text-white font-sans flex flex-col justify-between p-6 md:p-10 lg:p-12 selection:bg-white selection:text-black antialiased relative">
+      {/* HEADER (MOBİL TIKLAMA İÇİN Z-50 İLE EN ÜSTE TAŞINDI) */}
+      <header className="relative z-50 w-full flex justify-between items-center shrink-0">
         {/* LOGO */}
         <div className="relative w-20 h-6 lg:w-28 lg:h-8">
           <Image
@@ -82,10 +82,10 @@ export default function ComingSoon() {
         </div>
 
         {/* DİL SEÇİMİ */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative z-50" ref={dropdownRef}>
           <button
             onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex items-center space-x-1.5 text-[10px] tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors bg-zinc-950 border border-zinc-800/60 px-2.5 py-1.5 rounded-lg"
+            className="flex items-center space-x-1.5 text-[10px] tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors bg-zinc-950 border border-zinc-800/60 px-2.5 py-1.5 rounded-lg touch-manipulation cursor-pointer"
             aria-label="Select Language"
           >
             <svg
@@ -112,7 +112,7 @@ export default function ComingSoon() {
                     setLang(item);
                     setIsLangOpen(false);
                   }}
-                  className={`w-full text-left px-2.5 py-1.5 text-[9px] tracking-wider flex justify-between items-center transition-all rounded-md ${
+                  className={`w-full text-left px-2.5 py-1.5 text-[9px] tracking-wider flex justify-between items-center transition-all rounded-md touch-manipulation cursor-pointer ${
                     lang === item
                       ? "bg-zinc-900 text-white font-medium"
                       : "text-zinc-400 hover:bg-zinc-900/50 hover:text-white"
@@ -128,7 +128,7 @@ export default function ComingSoon() {
       </header>
 
       {/* CENTER CONTENT */}
-      <section className="my-auto py-8 md:py-0 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <section className="relative z-10 my-auto py-8 md:py-0 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* SOL: RESİM */}
         <div className="md:col-span-6 lg:col-span-5 flex justify-start w-full">
           <div className="relative w-full aspect-[4/3] max-h-[320px] md:max-h-[380px] border border-zinc-900 overflow-hidden rounded-sm">
@@ -143,7 +143,7 @@ export default function ComingSoon() {
           </div>
         </div>
 
-        {/* SAĞ: MANİFESTO VE MOBİLDE GENİŞLEYEN İNPUT */}
+        {/* SAĞ: MANİFESTO VE İNPUT */}
         <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center w-full">
           <p className="text-[11px] lg:text-[12px] xl:text-[13px] font-light tracking-wider uppercase leading-relaxed text-zinc-300 mb-6 text-left">
             {content[lang].hero}
@@ -158,7 +158,7 @@ export default function ComingSoon() {
               {content[lang].success}
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex items-center border-b border-zinc-800 focus-within:border-zinc-500 transition-colors pb-1 w-full sm:max-w-xs">
+            <form onSubmit={handleSubmit} className="flex items-center border-b border-zinc-800 focus-within:border-zinc-500 transition-colors pb-1 w-full sm:max-w-xs relative z-20">
               <input
                 type="email"
                 required
@@ -170,7 +170,7 @@ export default function ComingSoon() {
               <button
                 type="submit"
                 aria-label="Submit"
-                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1"
+                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 touch-manipulation cursor-pointer"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -191,7 +191,7 @@ export default function ComingSoon() {
       </section>
 
       {/* FOOTER */}
-      <footer className="w-full flex justify-between items-end text-[9px] tracking-widest text-zinc-600 uppercase font-light shrink-0 pt-4 md:pt-0">
+      <footer className="relative z-10 w-full flex justify-between items-end text-[9px] tracking-widest text-zinc-600 uppercase font-light shrink-0 pt-4 md:pt-0">
         <div>© {new Date().getFullYear()} PAQGO</div>
         <div>ALL RIGHTS RESERVED</div>
       </footer>
