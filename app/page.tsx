@@ -134,62 +134,54 @@ export default function ComingSoon() {
       </header>
 
       {/* CENTER CONTENT */}
-      <section className="relative z-10 my-auto py-8 md:py-0 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
-        <div className="md:col-span-6 lg:col-span-5 flex justify-start w-full">
-          <div className="relative w-full aspect-[4/3] max-h-[320px] md:max-h-[380px] border border-zinc-900 overflow-hidden rounded-sm">
-            <Image
-              src="/image.png"
-              alt="PAQGO Editorial Visual"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover opacity-90"
-              priority
-            />
-          </div>
-        </div>
-
-        <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center w-full">
-          <p className="text-[11px] lg:text-[12px] xl:text-[13px] font-light tracking-wider uppercase leading-relaxed text-zinc-300 mb-6 text-left">
+      <section className="relative z-10 my-auto py-8 md:py-0 w-full max-w-4xl mx-auto flex items-center justify-center">
+        <div className="w-full flex flex-col justify-center">
+          <p className="text-[11px] lg:text-[12px] xl:text-[13px] font-light tracking-wider uppercase leading-relaxed text-zinc-300 mb-6 text-left max-w-[760px] w-full">
             {content[lang].hero}
           </p>
 
-          <div className="text-[9px] tracking-[0.25em] text-zinc-600 uppercase font-mono mb-6 text-left">
+          <div className="text-[9px] tracking-[0.25em] text-zinc-600 uppercase font-mono mb-6 text-left max-w-[760px] w-full">
             [{content[lang].status}]
           </div>
 
           {submitted ? (
-            <div className="text-[10px] tracking-widest text-zinc-400 border-b border-zinc-800 pb-2 font-mono uppercase inline-block">
+            <div className="text-[10px] tracking-widest text-zinc-400 border-b border-zinc-800 pb-2 font-mono uppercase inline-block max-w-[760px] w-full">
               {content[lang].success}
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex items-center border-b border-zinc-800 focus-within:border-zinc-500 transition-colors pb-1 w-full sm:max-w-xs md:max-w-[420px] relative z-20">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={content[lang].placeholder}
-                className="bg-transparent text-zinc-300 text-[10px] tracking-widest focus:outline-none w-full placeholder:text-zinc-700 uppercase py-1 font-light"
-              />
-              <button
-                type="submit"
-                aria-label="Submit"
-                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 cursor-pointer"
+            <div className="w-full max-w-[760px]" style={{ marginTop: 0 }}>
+              <form
+                onSubmit={handleSubmit}
+                className="flex items-center border-b border-zinc-800 focus-within:border-zinc-500 transition-colors pb-1 w-full relative z-20 align-middle"
               >
-                <svg
-                  className="w-3.5 h-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={content[lang].placeholder}
+                  className="bg-transparent text-zinc-300 text-[10px] tracking-widest focus:outline-none w-full placeholder:text-zinc-700 uppercase py-1 font-light leading-none align-middle"
+                />
+                <button
+                  type="submit"
+                  aria-label="Submit"
+                  className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 cursor-pointer shrink-0 flex items-center justify-center leading-none"
                 >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </button>
-            </form>
+                  <svg
+                    className="w-3.5 h-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </button>
+              </form>
+            </div>
           )}
         </div>
       </section>
