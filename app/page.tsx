@@ -48,13 +48,17 @@ export default function ComingSoon() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsLangOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -65,11 +69,21 @@ export default function ComingSoon() {
     }
   };
 
+  const toggleLang = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    setIsLangOpen((prev) => !prev);
+  };
+
+  const selectLanguage = (item: Language, e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    setLang(item);
+    setIsLangOpen(false);
+  };
+
   return (
     <main className="min-h-screen md:h-screen w-full max-w-full overflow-x-hidden bg-black text-white font-sans flex flex-col justify-between p-6 md:p-10 lg:p-12 selection:bg-white selection:text-black antialiased relative">
-      {/* HEADER (MOBİL TIKLAMA İÇİN Z-50 İLE EN ÜSTE TAŞINDI) */}
+      {/* HEADER */}
       <header className="relative z-50 w-full flex justify-between items-center shrink-0">
-        {/* LOGO */}
         <div className="relative w-20 h-6 lg:w-28 lg:h-8">
           <Image
             src="/logo.png"
@@ -84,8 +98,10 @@ export default function ComingSoon() {
         {/* DİL SEÇİMİ */}
         <div className="relative z-50" ref={dropdownRef}>
           <button
-            onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex items-center space-x-1.5 text-[10px] tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors bg-zinc-950 border border-zinc-800/60 px-2.5 py-1.5 rounded-lg touch-manipulation cursor-pointer"
+            type="button"
+            onClick={toggleLang}
+            onTouchEnd={toggleLang}
+            className="flex items-center space-x-1.5 text-[10px] tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors bg-zinc-950 border border-zinc-800/60 px-2.5 py-1.5 rounded-lg select-none cursor-pointer"
             aria-label="Select Language"
           >
             <svg
@@ -108,11 +124,10 @@ export default function ComingSoon() {
               {(["EN", "TR", "DE", "FR"] as Language[]).map((item) => (
                 <button
                   key={item}
-                  onClick={() => {
-                    setLang(item);
-                    setIsLangOpen(false);
-                  }}
-                  className={`w-full text-left px-2.5 py-1.5 text-[9px] tracking-wider flex justify-between items-center transition-all rounded-md touch-manipulation cursor-pointer ${
+                  type="button"
+                  onClick={(e) => selectLanguage(item, e)}
+                  onTouchEnd={(e) => selectLanguage(item, e)}
+                  className={`w-full text-left px-2.5 py-1.5 text-[9px] tracking-wider flex justify-between items-center transition-all rounded-md select-none cursor-pointer ${
                     lang === item
                       ? "bg-zinc-900 text-white font-medium"
                       : "text-zinc-400 hover:bg-zinc-900/50 hover:text-white"
@@ -129,7 +144,6 @@ export default function ComingSoon() {
 
       {/* CENTER CONTENT */}
       <section className="relative z-10 my-auto py-8 md:py-0 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
-        {/* SOL: RESİM */}
         <div className="md:col-span-6 lg:col-span-5 flex justify-start w-full">
           <div className="relative w-full aspect-[4/3] max-h-[320px] md:max-h-[380px] border border-zinc-900 overflow-hidden rounded-sm">
             <Image
@@ -143,7 +157,6 @@ export default function ComingSoon() {
           </div>
         </div>
 
-        {/* SAĞ: MANİFESTO VE İNPUT */}
         <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center w-full">
           <p className="text-[11px] lg:text-[12px] xl:text-[13px] font-light tracking-wider uppercase leading-relaxed text-zinc-300 mb-6 text-left">
             {content[lang].hero}
@@ -170,7 +183,7 @@ export default function ComingSoon() {
               <button
                 type="submit"
                 aria-label="Submit"
-                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 touch-manipulation cursor-pointer"
+                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 cursor-pointer"
               >
                 <svg
                   className="w-3.5 h-3.5"
