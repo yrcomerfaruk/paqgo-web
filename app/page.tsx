@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 type Language = "EN" | "TR" | "DE" | "FR";
@@ -41,25 +41,8 @@ const content = {
 
 export default function ComingSoon() {
   const [lang, setLang] = useState<Language>("EN");
-  const [isLangOpen, setIsLangOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: PointerEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsLangOpen(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("pointerdown", handleClickOutside);
-    };
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,19 +50,6 @@ export default function ComingSoon() {
       setSubmitted(true);
       setEmail("");
     }
-  };
-
-  const toggleLang = (e?: React.SyntheticEvent) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    setIsLangOpen((prev) => !prev);
-  };
-
-  const selectLanguage = (item: Language, e?: React.SyntheticEvent) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    setLang(item);
-    setIsLangOpen(false);
   };
 
   return (
@@ -98,47 +68,38 @@ export default function ComingSoon() {
         </div>
 
         {/* DİL SEÇİMİ */}
-        <div className="relative z-50" ref={dropdownRef}>
-          <button
-            type="button"
-            onClick={toggleLang}
-            className="flex items-center space-x-1.5 text-[10px] tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors bg-zinc-950 border border-zinc-800/60 px-2.5 py-1.5 rounded-lg select-none cursor-pointer"
-            aria-label="Select Language"
-          >
+        <div className="relative z-50">
+          <label className="sr-only" htmlFor="language-select">
+            Select Language
+          </label>
+          <div className="relative flex items-center bg-zinc-950 border border-zinc-800/60 rounded-lg px-2.5 py-1.5">
             <svg
-              className="w-3 h-3 text-zinc-500"
+              className="w-3 h-3 text-zinc-500 mr-1.5"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.2"
+              aria-hidden="true"
             >
               <circle cx="12" cy="12" r="10" />
               <line x1="2" y1="12" x2="22" y2="12" />
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
             </svg>
-            <span className="font-normal text-zinc-300">{lang}</span>
-            <span className="text-[7px] text-zinc-600">▼</span>
-          </button>
-
-          {isLangOpen && (
-            <div className="absolute right-0 mt-2 w-32 bg-zinc-950 border border-zinc-800/80 shadow-2xl z-50 p-1 rounded-xl backdrop-blur-md">
+            <select
+              id="language-select"
+              value={lang}
+              onChange={(e) => setLang(e.target.value as Language)}
+              className="appearance-none bg-transparent text-[10px] tracking-widest text-zinc-300 outline-none pr-4 cursor-pointer"
+              aria-label="Select Language"
+            >
               {(["EN", "TR", "DE", "FR"] as Language[]).map((item) => (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={(e) => selectLanguage(item, e)}
-                  className={`w-full text-left px-2.5 py-1.5 text-[9px] tracking-wider flex justify-between items-center transition-all rounded-md select-none cursor-pointer ${
-                    lang === item
-                      ? "bg-zinc-900 text-white font-medium"
-                      : "text-zinc-400 hover:bg-zinc-900/50 hover:text-white"
-                  }`}
-                >
-                  <span>{languageNames[item]}</span>
-                  <span className="text-[8px] text-zinc-600">{item}</span>
-                </button>
+                <option key={item} value={item} className="bg-black text-white">
+                  {item}
+                </option>
               ))}
-            </div>
-          )}
+            </select>
+            <span className="pointer-events-none absolute right-2 text-[7px] text-zinc-600">▼</span>
+          </div>
         </div>
       </header>
 
