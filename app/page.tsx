@@ -69,13 +69,15 @@ export default function ComingSoon() {
     }
   };
 
-  const toggleLang = (e: React.SyntheticEvent) => {
-    e.stopPropagation();
+  const toggleLang = (e?: React.SyntheticEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setIsLangOpen((prev) => !prev);
   };
 
-  const selectLanguage = (item: Language, e: React.SyntheticEvent) => {
-    e.stopPropagation();
+  const selectLanguage = (item: Language, e?: React.SyntheticEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setLang(item);
     setIsLangOpen(false);
   };
@@ -100,7 +102,6 @@ export default function ComingSoon() {
           <button
             type="button"
             onClick={toggleLang}
-            onTouchEnd={toggleLang}
             className="flex items-center space-x-1.5 text-[10px] tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors bg-zinc-950 border border-zinc-800/60 px-2.5 py-1.5 rounded-lg select-none cursor-pointer"
             aria-label="Select Language"
           >
@@ -126,7 +127,6 @@ export default function ComingSoon() {
                   key={item}
                   type="button"
                   onClick={(e) => selectLanguage(item, e)}
-                  onTouchEnd={(e) => selectLanguage(item, e)}
                   className={`w-full text-left px-2.5 py-1.5 text-[9px] tracking-wider flex justify-between items-center transition-all rounded-md select-none cursor-pointer ${
                     lang === item
                       ? "bg-zinc-900 text-white font-medium"
