@@ -143,21 +143,8 @@ export default function ComingSoon() {
       </header>
 
       {/* CENTER CONTENT */}
-      <section className="relative z-10 my-auto py-8 md:py-0 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
-        <div className="md:col-span-6 lg:col-span-5 flex justify-start w-full">
-          <div className="relative w-full aspect-[4/3] max-h-[320px] md:max-h-[380px] border border-zinc-900 overflow-hidden rounded-sm">
-            <Image
-              src="/image.png"
-              alt="PAQGO Editorial Visual"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover opacity-90"
-              priority
-            />
-          </div>
-        </div>
-
-        <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-center w-full">
+      <section className="relative z-10 my-auto py-8 md:py-0 w-full max-w-4xl mx-auto grid grid-cols-1 gap-8 lg:gap-10 items-center">
+        <div className="flex flex-col justify-center w-full">
           <p className="text-[11px] lg:text-[12px] xl:text-[13px] font-light tracking-wider uppercase leading-relaxed text-zinc-300 mb-6 text-left">
             {content[lang].hero}
           </p>
@@ -171,7 +158,7 @@ export default function ComingSoon() {
               {content[lang].success}
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex items-center border-b border-zinc-800 focus-within:border-zinc-500 transition-colors pb-1 w-full sm:max-w-xs relative z-20">
+            <form onSubmit={handleSubmit} className="flex items-center border-b border-zinc-800 focus-within:border-zinc-500 transition-colors pb-1 w-full sm:max-w-xs md:max-w-full md:w-full relative z-20">
               <input
                 type="email"
                 required
@@ -183,7 +170,7 @@ export default function ComingSoon() {
               <button
                 type="submit"
                 aria-label="Submit"
-                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 cursor-pointer"
+                className="text-zinc-500 hover:text-zinc-200 transition-colors pl-2 pr-1 cursor-pointer shrink-0"
               >
                 <svg
                   className="w-3.5 h-3.5"
